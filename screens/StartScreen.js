@@ -37,7 +37,13 @@ const StartScreen = props => {
 
   let confirmedOutput
   if (confirmedValue) {
-    confirmedOutput = <NumberContainer selectedValue={selectedValue} />
+    confirmedOutput =
+      <NumberContainer
+        text='You Selected:'
+        value={selectedValue}
+        buttonTitle="Start Game"
+        function={props.onStartGame}
+      />
   }
 
   return (

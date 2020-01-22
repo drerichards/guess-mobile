@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import Theme from '../constants/Theme'
 import Card from './Card'
 import CustomButton from './CustomButton'
@@ -7,15 +7,20 @@ import CustomButton from './CustomButton'
 const NumberContainer = props => {
   return (
     <Card style={styles.card}>
-      <Text style={styles.text}>You Selected:</Text>
+      {props.text
+        ? <Text style={styles.text}>{props.text}</Text>
+        : null}
       <View style={styles.summaryContainer}>
-        <Text style={styles.number}>{props.selectedValue}</Text>
+        <Text style={styles.number}>{props.value}</Text>
       </View>
-      <CustomButton
-        style={styles.button}
-        title="Start Game"
-        color={Theme.secondary}
-      />
+      {props.buttonTitle
+        ? <CustomButton
+          style={styles.button}
+          title={props.buttonTitle}
+          color={Theme.secondary}
+          function={props.function}
+        />
+        : null}
     </Card>
   )
 }
