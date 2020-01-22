@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
+import Theme from '../constants/Theme'
 import Card from '../components/Card'
 
 const StartScreen = props => {
@@ -10,8 +11,12 @@ const StartScreen = props => {
         <Text>Select A Number:</Text>
         <TextInput />
         <View style={styles.buttonContainer}>
-          <Button title="Reset" onPress={() => { }} />
-          <Button title="Confirm" onPress={() => { }} />
+          <View style={styles.buttonDiv}>
+            <Button title="Reset" color={Theme.error} onPress={() => { }} />
+          </View>
+          <View style={styles.buttonDiv}>
+            <Button title="Confirm" color={Theme.secondary} onPress={() => { }} />
+          </View>
         </View>
       </Card>
     </View>
@@ -42,6 +47,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     paddingHorizontal: 15
+  },
+  buttonDiv: {
+    width: 100
   }
 })
 
