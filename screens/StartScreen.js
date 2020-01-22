@@ -1,14 +1,40 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 import Theme from '../constants/Theme'
 import Card from '../components/Card'
 import Input from '../components/Input'
 
 const StartScreen = props => {
   const [enteredValue, setEnteredValue] = useState('')
-  const inputHandler = inputVal => {
+  const [selectedValue, setSelectedValue] = useState('')
+  const [confirmedValue, setConfirmedValue] = useState(false)
+
+  const inputValidate = inputVal => {
     //removes any non-num value from input
     setEnteredValue(inputVal.replace(/[^0-9]/g, ''))
+  }
+
+  const inputConfirm = () => {
+    const chosenNumber = parseInt(enteredValue)
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert('Invalid Entry',
+        'Number must be 1 - 99',
+        [{ text: 'Okay', style: 'destructive', onPress: inputReset }])
+      return
+    }
+    setConfirmedValue(true)
+    setEnteredValue('')
+    setSelectedValue(chosenNumber)
+  }
+
+  const inputReset = () => {
+    setConfirmedValue(false)
+    setEnteredValue('')
+  }
+
+  let confirmedOutput
+  if (confirmedValue) {
+    confirmedOutput = <Text>Chosen Number: {selectedValue}</Text>
   }
 
   return (
@@ -24,18 +50,23 @@ const StartScreen = props => {
             keyboardType='number-pad'
             maxLength={2}
             style={styles.input}
-            onChangeText={inputHandler}
+            onChangeText={inputValidate}
             value={enteredValue}
           />
           <View style={styles.buttonContainer}>
             <View style={styles.buttonDiv}>
-              <Button title="Reset" color={Theme.error} onPress={() => { }} />
+              <Button title="Reset"
+                color={Theme.error}
+                onPress={inputReset} />
             </View>
             <View style={styles.buttonDiv}>
-              <Button title="Confirm" color={Theme.secondary} onPress={() => { }} />
+              <Button title="Confirm"
+                color={Theme.secondary}
+                onPress={inputConfirm} />
             </View>
           </View>
         </Card>
+        {confirmedOutput}
       </View>
     </TouchableWithoutFeedback>
   )
