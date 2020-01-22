@@ -5,7 +5,8 @@ const Input = props => {
   return (
     <TextInput
       {...props}
-      style={{...styles.input, ...props.style}}/>
+      style={{ ...styles.input, ...props.style }}
+    />
   )
 }
 

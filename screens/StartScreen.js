@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 import Theme from '../constants/Theme'
 import Card from '../components/Card'
 import Input from '../components/Input'
+import CustomButton from '../components/CustomButton'
+import NumberContainer from '../components/NumberContainer'
 
 const StartScreen = props => {
   const [enteredValue, setEnteredValue] = useState('')
@@ -25,6 +27,7 @@ const StartScreen = props => {
     setConfirmedValue(true)
     setEnteredValue('')
     setSelectedValue(chosenNumber)
+    Keyboard.dismiss()
   }
 
   const inputReset = () => {
@@ -34,7 +37,7 @@ const StartScreen = props => {
 
   let confirmedOutput
   if (confirmedValue) {
-    confirmedOutput = <Text>Chosen Number: {selectedValue}</Text>
+    confirmedOutput = <NumberContainer selectedValue={selectedValue} />
   }
 
   return (
@@ -54,16 +57,16 @@ const StartScreen = props => {
             value={enteredValue}
           />
           <View style={styles.buttonContainer}>
-            <View style={styles.buttonDiv}>
-              <Button title="Reset"
-                color={Theme.error}
-                onPress={inputReset} />
-            </View>
-            <View style={styles.buttonDiv}>
-              <Button title="Confirm"
-                color={Theme.secondary}
-                onPress={inputConfirm} />
-            </View>
+            <CustomButton
+              title="Reset"
+              color={Theme.error}
+              function={inputReset}
+            />
+            <CustomButton
+              title="Confirm"
+              color={Theme.secondary}
+              function={inputConfirm}
+            />
           </View>
         </Card>
         {confirmedOutput}
